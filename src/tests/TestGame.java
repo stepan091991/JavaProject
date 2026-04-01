@@ -1,0 +1,91 @@
+package tests;
+
+import core.*;
+import systems.ParticleSystem;
+import utils.GameBuilder;
+import java.awt.*;
+
+import static tests.TestGame.*;
+
+public class TestGame {
+    static ParticleSystem particles;
+    static Sprite player;
+    public static void main(String[] args) {
+        // Создаем игру с помощью GameBuilder
+        GameBuilder builder = new GameBuilder()
+                .setSize(800, 600)  // Размер окна
+                .setFPS(60)         // Целевой FPS
+                .withInput()        // Подключаем обработку ввода
+                .withPhysics();     // Подключаем обработку физики
+
+        // Получаем компоненты игры
+        GamePanel panel = builder.build();
+        GameWorld world = builder.getWorld();
+        InputHandler input = builder.getInput();
+
+        // Создаем и добавляем простой объект
+        SimpleObject obj = new SimpleObject(400, 300);
+        player = new Sprite("/tests/test.png");
+        player.resize(128,128);
+        obj.setSprite(player);
+        world.addObject(obj);
+
+        particles = new ParticleSystem();
+
+        // Запускаем игру
+        GameFrame frame = new GameFrame(panel);
+        panel.start();
+
+        System.out.println("Game started! Press ESC to exit.");
+
+    }
+
+}
+
+//Объект игрока
+class SimpleObject extends GameObject {
+
+    public SimpleObject(int x, int y) {
+        super(x, y, 50, 50);
+    }
+
+    @Override
+    public void update(InputHandler input) {
+        // Движение объекта
+        if (input != null) {
+            int speed = 5;
+            if (input.isPressed("LEFT")) x -= speed;
+            if (input.isPressed("RIGHT")) x += speed;
+            if (input.isPressed("UP")) y -= speed;
+            if (input.isPressed("DOWN")) y += speed;
+            if (input.isPressed("EXIT")) System.exit(0);
+        }
+        sprite.setPosition(x, y);
+
+        // Границы
+        x = Math.max(0, Math.min(750, x));
+        y = Math.max(0, Math.min(550, y));
+    }
+
+    @Override
+    public void draw(Graphics2D g) {
+        // Рисуем квадрат
+        player.draw(g);
+        //g.setColor(Color.CYAN);
+        //g.fillRect(x, y, width, height);
+        //g.setColor(Color.BLUE);
+        //g.drawRect(x, y, width, height);
+
+
+        // Проверка партиклов
+        particles.emit(0, 0, 5, ParticleSystem.ParticleType.BLOOD);
+        particles.update();
+        particles.draw(g);
+
+        // Рисуем текст
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.drawString("Move with WASD/Arrows", 20, 50);
+        g.drawString("Press ESC to exit", 20, 80);
+    }
+}
