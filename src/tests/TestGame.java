@@ -28,8 +28,8 @@ public class TestGame {
 
         // Создаем и добавляем простой объект
         SimpleObject obj = new SimpleObject(400, 300);
-        player = new Sprite("/tests/test.png");
-        player.resize(128,128);
+        player = new Sprite("/tests/test.gif");
+        player.resize(256,256);
         obj.setSprite(player);
         world.addObject(obj);
 
@@ -49,7 +49,7 @@ public class TestGame {
         particles = new ParticleSystem();
 
         // Запускаем игру
-        GameFrame frame = new GameFrame(panel);
+        GameFrame frame = new GameFrame(panel, "test");
         panel.start();
 
         System.out.println("Game started! Press ESC to exit.");
@@ -62,7 +62,7 @@ public class TestGame {
 class SimpleObject extends GameObject {
 
     public SimpleObject(int x, int y) {
-        super(x, y, 50, 50);
+        super(x, y, 128, 128);
     }
 
     @Override
