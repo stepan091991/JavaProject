@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InputHandler implements KeyListener {
+    /*
+    Класс, отвечающий за обработку ввода с клавиатуры.
+     */
+
     private Map<Integer, Boolean> keys;
     private Map<String, Integer> keyBindings;
 
@@ -17,6 +21,10 @@ public class InputHandler implements KeyListener {
     }
 
     private void setDefaultBindings() {
+        /*
+        Стандартные назначения клавиш.
+         */
+
         bind("UP", KeyEvent.VK_W, KeyEvent.VK_UP);
         bind("DOWN", KeyEvent.VK_S, KeyEvent.VK_DOWN);
         bind("LEFT", KeyEvent.VK_A, KeyEvent.VK_LEFT);
@@ -27,12 +35,20 @@ public class InputHandler implements KeyListener {
     }
 
     public void bind(String action, int... keyCodes) {
+        /*
+        Функция для привязки клавиши к какому-либо действию.
+         */
+
         for (int keyCode : keyCodes) {
             keyBindings.put(action + "_" + keyCode, keyCode);
         }
     }
 
     public boolean isPressed(String action) {
+        /*
+        Функция, срабатывает пока нажата нужная клавиша.
+         */
+
         for (Map.Entry<String, Integer> entry : keyBindings.entrySet()) {
             if (entry.getKey().startsWith(action + "_")) {
                 if (isKeyPressed(entry.getValue())) {

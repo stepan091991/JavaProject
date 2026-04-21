@@ -3,6 +3,9 @@ package core;
 import java.awt.Graphics2D;
 
 public abstract class GameObject {
+    /*
+    Класс игрового объекта, реализует основные методы игрового объекта для наследования в самописных классах.
+     */
     protected int x, y;
     protected int width, height;
     protected boolean active = true;
@@ -15,8 +18,19 @@ public abstract class GameObject {
         this.height = height;
     }
     public abstract void update(InputHandler input);
+    /*
+    Функция, вызываемая при обновлении объекта(обработка движения и т.д.)
+     */
+
     public abstract void draw(Graphics2D g);
+    /*
+    Функция, вызываемая для отрисовки объекта в окне игры.
+     */
+
     public void setSprite(Sprite sprite) {
+        /*
+        Устанавливает sprite(изображение) объекта.
+         */
         this.sprite = sprite;
         if (sprite != null) {
             sprite.resize(width, height);

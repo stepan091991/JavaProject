@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CollisionSystem {
+    /*
+    Класс, отвечающий за обработку столкновений объектов.
+     */
+
     private List<CollisionBox> boxes;
     private List<CollisionListener> listeners;
     private boolean enabled = true;
@@ -17,11 +21,18 @@ public class CollisionSystem {
     }
 
     public void registerObject(GameObject obj, int x, int y, int width, int height) {
+        /*
+        Добавить объект в расчёт столкновений.
+         */
+
         CollisionBox box = new CollisionBox(obj, x, y, width, height);
         boxes.add(box);
     }
 
     public void unregisterObject(GameObject obj) {
+        /*
+        Убрать объект из расчёта столкновений.
+         */
         boxes.removeIf(box -> box.parent == obj);
     }
 
@@ -30,6 +41,10 @@ public class CollisionSystem {
     }
 
     public void checkCollisions() {
+        /*
+        Функция проверки столкновений.
+         */
+
         if (!enabled) return;
 
         for (CollisionBox box : boxes) {
@@ -50,6 +65,10 @@ public class CollisionSystem {
     }
 
     private void notifyCollision(GameObject obj1, GameObject obj2) {
+        /*
+        Функция, сообщает движку о столкновении.
+         */
+
         for (CollisionListener listener : listeners) {
             listener.onCollision(obj1, obj2);
         }
@@ -65,6 +84,10 @@ public class CollisionSystem {
     }
 
     private static class CollisionBox {
+        /*
+        Класс квадратной зоны столкновений.
+         */
+
         private GameObject parent;
         private Rectangle bounds;
         private int offsetX, offsetY;

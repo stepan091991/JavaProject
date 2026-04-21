@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class Sprite {
+    /*
+    Класс изображения игрового объекта. Отвечает за загрузку, изменение и добавление изображения к объектам.
+     */
+
     private BufferedImage originalImage;
     private BufferedImage currentImage;
     private int x, y;
@@ -18,6 +22,10 @@ public class Sprite {
     }
 
     private void loadImage(String path) {
+        /*
+        Функция, отвечающая за загрузку изображения
+         */
+
         try (InputStream input = getClass().getResourceAsStream(path)) {
             if (input != null) {
                 originalImage = ImageIO.read(input);
@@ -31,6 +39,10 @@ public class Sprite {
     }
 
     public void resize(int newWidth, int newHeight) {
+        /*
+        Изменение размера изображения.
+         */
+
         if (newWidth > 0 && newHeight > 0 && originalImage != null) {
             Image scaled = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
             currentImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);

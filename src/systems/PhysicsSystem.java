@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhysicsSystem {
+    /*
+    Класс обработки физики.
+     */
+
     private List<PhysicsBody> bodies;
     private Vector2D gravity;
     private boolean enabled = true;
@@ -15,11 +19,19 @@ public class PhysicsSystem {
     }
 
     public void registerBody(GameObject obj) {
+        /*
+        Добавить объект к расчёту физики.
+         */
+
         PhysicsBody body = new PhysicsBody(obj);
         bodies.add(body);
     }
 
     public void unregisterBody(GameObject obj) {
+        /*
+        Убрать объект из расчёта физики.
+         */
+
         bodies.removeIf(body -> body.object == obj);
     }
 
@@ -39,6 +51,10 @@ public class PhysicsSystem {
     }
 
     public void applyForce(GameObject obj, Vector2D force) {
+        /*
+        Приложить усилие к объекту по вектору.
+         */
+
         for (PhysicsBody body : bodies) {
             if (body.object == obj) {
                 body.velocity.add(force);

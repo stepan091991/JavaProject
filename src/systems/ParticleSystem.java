@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Random;
 
 public class ParticleSystem {
+    /*
+    Класс, отвечающий за создание и обработку частиц.
+     */
+
     private List<Particle> particles;
     private Random random;
     private boolean enabled = true;
@@ -17,6 +21,10 @@ public class ParticleSystem {
     }
 
     public void emit(int x, int y, int count, ParticleType type) {
+        /*
+        Создаёт частицы в указанной позиции.
+         */
+
         for (int i = 0; i < count; i++) {
             particles.add(new Particle(x, y, type, random));
         }
