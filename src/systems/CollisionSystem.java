@@ -1,7 +1,6 @@
 package systems;
 
 import core.GameObject;
-import core.GameWorld;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +19,12 @@ public class CollisionSystem {
         this.listeners = new ArrayList<>();
     }
 
-    public void registerObject(GameObject obj, int x, int y, int width, int height) {
+    public void registerObject(GameObject obj, int offsetx, int offsety, int width, int height) {
         /*
         Добавить объект в расчёт столкновений.
          */
 
-        CollisionBox box = new CollisionBox(obj, x, y, width, height);
+        CollisionBox box = new CollisionBox(obj, offsetx, offsety, width, height);
         boxes.add(box);
     }
 
@@ -33,6 +32,7 @@ public class CollisionSystem {
         /*
         Убрать объект из расчёта столкновений.
          */
+
         boxes.removeIf(box -> box.parent == obj);
     }
 
