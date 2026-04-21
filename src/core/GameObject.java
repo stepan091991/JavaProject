@@ -10,12 +10,14 @@ public abstract class GameObject {
     protected int width, height;
     protected boolean active = true;
     protected Sprite sprite;
+    protected double mass;
 
     public GameObject(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.mass = 1;
     }
     public abstract void update(InputHandler input);
     /*
@@ -45,4 +47,6 @@ public abstract class GameObject {
     public int getHeight() { return height; }
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
+    public void setMass(double mass) { this.mass = mass;}
+    public double getMass() {return this.mass;}
 }

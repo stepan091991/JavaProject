@@ -11,10 +11,12 @@ public class InputHandler implements KeyListener {
      */
 
     private Map<Integer, Boolean> keys;
+    private Map<Integer, Boolean> previousKeys;
     private Map<String, Integer> keyBindings;
 
     public InputHandler() {
         this.keys = new HashMap<>();
+        this.previousKeys = new HashMap<>();
         this.keyBindings = new HashMap<>();
 
         setDefaultBindings();
@@ -59,8 +61,59 @@ public class InputHandler implements KeyListener {
         return false;
     }
 
+    public boolean onKeyPressed(String action) {
+        /*
+        Функция, срабатывает только один раз при нажатии клавиши.
+         */
+
+        for (Map.Entry<String, Integer> entry : keyBindings.entrySet()) {
+            if (entry.getKey().startsWith(action + "_")) {
+                if (wasKeyJustPressed(entry.getValue())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean onKeyReleased(String action) {
+        /*
+        Функция, срабатывает только один раз при отпускании клавиши.
+         */
+
+        for (Map.Entry<String, Integer> entry : keyBindings.entrySet()) {
+            if (entry.getKey().startsWith(action + "_")) {
+                if (wasKeyJustReleased(entry.getValue())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean isKeyPressed(int keyCode) {
         return keys.getOrDefault(keyCode, false);
+    }
+
+    public boolean wasKeyJustPressed(int keyCode) {
+        boolean current = keys.getOrDefault(keyCode, false);
+        boolean previous = previousKeys.getOrDefault(keyCode, false);
+        return current && !previous;
+    }
+
+    public boolean wasKeyJustReleased(int keyCode) {
+        boolean current = keys.getOrDefault(keyCode, false);
+        boolean previous = previousKeys.getOrDefault(keyCode, false);
+        return !current && previous;
+    }
+
+    public void update() {
+        /*
+        Обновление состояния клавиш. Вызывать в конце каждого игрового цикла.
+         */
+
+        previousKeys.clear();
+        previousKeys.putAll(keys);
     }
 
     @Override
