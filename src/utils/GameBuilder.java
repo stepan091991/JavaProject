@@ -19,8 +19,10 @@ public class GameBuilder {
     }
 
     public GameBuilder withInput() {
-        this.input = new InputHandler();
+        this.input = new InputHandler(this.panel);
         panel.setInputHandler(input);
+        panel.addMouseListener(this.input);
+        panel.addMouseMotionListener(this.input);
         return this;
     }
 
